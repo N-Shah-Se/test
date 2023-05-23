@@ -1,29 +1,39 @@
-name: CI
 
-# Controls when the workflow will run
+# Name of this GitHub Actions workflow.
+name: Semgrep
+
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
+  # Scan changed files in PRs (diff-aware scanning):
+  pull_request: {}
+  # Scan on-demand through GitHub Actions interface:
+  workflow_dispatch: {}
+  # Scan mainline branches and report all findings: 
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: ["master", "main"]
+  # Schedule the CI job (this method uses cron syntax):
+  schedule:
+    - cron: '20 17 * * *' # Sets Semgrep to scan every day at 17:20 UTC.
+    # It is recommended to change the schedule to a random time.
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  semgrep:
+    # User-definable name of this GitHub Actions job:
+    name: semgrep/ci
+    # If you are self-hosting, change the following `runs-on` value: 
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    container:
+      # A Docker image with Semgrep installed. Do not change this.
+      image: returntocorp/semgrep
 
-      - name: semgrep-rules-test
-        # You may pin to the exact commit or the version.
-        # uses: returntocorp/semgrep-rules-test-action@81194d42d3755b24a2eef725138d16bfc61232a2
-        uses: returntocorp/semgrep-rules-test-action@v0.2
+    # Skip any PR created by dependabot to avoid permission issues:
+    if: (github.actor != 'dependabot[bot]')
+
+    steps:
+      # Fetch project source with GitHub Actions Checkout.
+      - uses: actions/checkout@v3
+      # Run the "semgrep ci" command on the command line of the docker image.
+      - run: semgrep ci
+      - run: semgrep ci || true
+        env:
+           # Add the rules that Semgrep uses by setting the SEMGR
