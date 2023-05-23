@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+    db:
+        image:
+            postgres
+        environment:
+            POSTGRES_USER: kong
+            POSTGRES_DB: kong
+            POSTGRES_PASSWORD: kong
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+
+    qr_faas_management:
+        build:
+            context: .
+
+        ports:
+            - "8000:8000"
+
+        volumes:
+            - ./qr_faas_management:/qr_faas_management
+
+        command: python manage.py runserver 0.0.0.0:8000
+        depends_on:
+            - db
+        restart: always
+
+volumes:
+    pgdata:
+
+
+
+

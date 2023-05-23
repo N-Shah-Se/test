@@ -1,0 +1,13 @@
+[
+  {
+    "model": "user_manager.UserModel",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$0mw3Nl4nxqJ2$JIRj/S6iWSdCcwCuktfjbmKUEauThW/29X5mT1okt+o=",
+      "last_login": null,
+      "username": "nasirshah",
+      "email": "nasirshahkin@gmail.com",
+      "is_admin": true
+    }
+  }
+]

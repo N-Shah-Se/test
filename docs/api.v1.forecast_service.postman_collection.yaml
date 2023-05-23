@@ -1,0 +1,633 @@
+openapi: 3.0.1
+info:
+  title: QR Service Utils
+  description: It manage services and Python packages
+  version: v1.0
+servers:
+- url: http://127.0.0.1:8000/
+security:
+- Basic: []
+paths:
+  /v1/users/:
+    post:
+      tags:
+      - User Management.Add User
+      summary: Add New Users
+      description: Adding new Users
+      parameters:
+      - name: filter
+        in: query
+        required: false
+        schema:
+          type: string
+          default: all
+          enum:
+            - all
+            - outdated
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content: {}
+    get:
+      tags:
+      - User Management.User Profile
+      summary:  Get All users
+      description: Shows all users
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content: {}
+  /v1/users/{user_id}:
+    get:
+      tags:
+      - User Management.User Profile
+      summary: Get Specific User Profile
+      description: Add Description
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+       
+    put:
+      tags:
+      - User Management.User Profile
+      summary: Edit User Profile
+      description: Edit User Profile
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/users/{user_id}/enable:
+    put:
+      tags:
+      - User Management.Enable/Disable User
+      summary: Enable Users
+      description: Enable User
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/users/{user_id}/disable:
+    put:
+      tags:
+      - User Management.Enable/Disable User
+      summary: Disable Users
+      description: Disable Users
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/users/{user_id}/plan:
+    get:
+      tags:
+      - User Management.Plan
+      summary: Current Plan
+      description: Current Plan
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+    put:
+      tags:
+      - User Management.Plan
+      summary: Changes Plan
+      description: Change Plan
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/users/{user_id}/api/{api_id}:
+    post:
+      tags:
+      - User Management.Api
+      summary: Add Summary
+      description: Add Description
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: api_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - User Management.Api
+      summary: Add Summary
+      description: Add Description
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: api_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          
+    get:
+      tags:
+      - User Management.Api
+      summary: Add Summary
+      description: Add Description
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: api_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/users/{user_id}/api:
+    get:
+      tags:
+      - User Management.Api
+      summary: Add Summary
+      description: Add Description 
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/users/{user_id}/token:
+    post:
+      tags:
+      - User Management.Api Token
+      summary: Add Summary
+      description: Add Description
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - User Management.Api Token
+      summary: Add Summary
+      description: Add Description
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/users/{user_id}/token/enable:
+    put:
+      tags:
+      - User Management.Api Token
+      summary: Add Summary
+      description: Add Descrion
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/users/{user_id}/token/disable:
+    delete:
+      tags:
+      - User Management.Api Token
+      summary: Add Summary
+      description: Add Description
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/users/{user_id}/token/domain:
+    post:
+      tags:
+      - User Management.Api Token
+      summary: Add Summary
+      description: Add Descrition
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - User Management.Api Token
+      summary: Add Summary
+      description: Add Description
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  
+  /v1/users/{user_id}/token/ip:
+    post:
+      tags:
+      - User Management.Api Token
+      summary: Add Summary
+      description: Add Descrion
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - User Management.Api Token
+      summary: Add Summary
+      description: add Description
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/plans/{user_id}:
+    get:
+      tags:
+      - Service Management.Plan Management
+      summary: Disable Users
+      description: Disable Users
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/plans/{plan_id}:
+    put:
+      tags:
+      - Service Management.Plan Management
+      summary: Current Plan
+      description: Current Plan
+      parameters:
+        - in: path
+          name: plan_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/plan/{plan_id}/enable:  
+    put:
+      tags:
+      - Service Management.Plan Management
+      summary: Changes Plan
+      description: Change Plan
+      parameters:
+        - in: path
+          name: plan_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/plan/{plan_id}/disable:  
+    put:
+      tags:
+      - Service Management.Plan Management
+      summary: Changes Plan
+      description: Change Plan
+      parameters:
+        - in: path
+          name: plan_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/plans:
+    post:
+      tags:
+      - Service Management.Plan Management
+      summary: Create Plan
+      description: It Will Create Plan
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+    get:
+      tags:
+      - Service Management.Plan Management
+      summary: Users Plan List 
+      description: This will return user plans list
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/billing/invoice/{user_id}:
+    post:
+      tags:
+      - Service Management.Billing
+      summary: Generate Billing Invoice
+      description: It will generate a Billing Invoice
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+
+  /v1/usage/summary:
+    get:
+      tags:
+      - Service Management.Monitoring
+      summary: Will Show Summary of All Services
+      description: This will show summary of all services
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+    
+  /v1/usage/all:
+    get:
+      tags:
+      - Service Management.Monitoring
+      summary: Show Usage of All Services
+      description: This Will Show The Usage of All Services
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/usage/summary/{user_id}:
+    get:
+      tags:
+      - Service Management.Monitoring
+      summary: Detailed Summary of Service Usage
+      description: The Complete Summary 
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/usage/all/{user_id}:
+    get:
+      tags:
+      - Service Management.Monitoring
+      summary: Detail usage of Service
+      description: This Show The Usage Of Service By User  
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/api/{api_id}:
+    get:
+      tags:
+      - Service Management.Api Management
+      summary: Getting Profile
+      description: It will show the prfoile
+      parameters:
+        - in: path
+          name: api_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+    put:
+      tags:
+      - Service Management.Api Management
+      summary: It Will Edit API
+      description: Editing API
+      parameters:
+        - in: path
+          name: api_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - Service Management.Api Management
+      summary: Deleting API
+      description: It will Delete API
+      parameters:
+        - in: path
+          name: api_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  /v1/api:
+    post:
+      tags:
+      - Service Management.Api Management
+      summary: Creates Api Service
+      description: It Will Creates Api Service
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+    get:
+      tags:
+      - Service Management.Api Management
+      summary: Shows Api Lists
+      description: List All the API's
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+  
+  
+  /v1/api/{api_id}/enable:
+    put:
+      tags:
+      - Service Management.Api Management
+      summary: Enable Api Service
+      description: It will enable Api Service
+      parameters:
+        - in: path
+          name: api_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+
+  /v1/api/{api_id}/disable:
+    put:
+      tags:
+      - Service Management.Api Management
+      summary: To disable api service
+      description: Disable the Api service 
+      parameters:
+        - in: path
+          name: api_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+
+components: {}

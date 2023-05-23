@@ -1,0 +1,67 @@
+*** Starting uWSGI 2.0.20 (64bit) on [Tue Dec 14 05:58:28 2021] ***
+compiled with version: 9.3.0 on 10 December 2021 09:02:18
+os: Linux-5.4.0-90-generic #101-Ubuntu SMP Fri Oct 15 20:00:55 UTC 2021
+nodename: ndev
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 4
+current working directory: /home/nasir/project/Forecast_as_a_service/qr_faas_management
+detected binary path: /home/nasir/project/Forecast_as_a_service/venv/md/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/nasir/project/Forecast_as_a_service/qr_faas_management
+your processes number limit is 23429
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /home/nasir/project/Forecast_as_a_service/qr_faas_management/qr_faas_management.sock fd 3
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.10 (default, Sep 28 2021, 16:10:42)  [GCC 9.3.0]
+PEP 405 virtualenv detected: /home/nasir/project/Forecast_as_a_service/venv/md
+Set PythonHome to /home/nasir/project/Forecast_as_a_service/venv/md
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x557475da2cf0
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 801944 bytes (783 KB) for 10 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x557475da2cf0 pid: 859450 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 859450)
+spawned uWSGI worker 1 (pid: 859452, cores: 1)
+spawned uWSGI worker 2 (pid: 859453, cores: 1)
+spawned uWSGI worker 3 (pid: 859454, cores: 1)
+spawned uWSGI worker 4 (pid: 859455, cores: 1)
+spawned uWSGI worker 5 (pid: 859456, cores: 1)
+spawned uWSGI worker 6 (pid: 859457, cores: 1)
+spawned uWSGI worker 7 (pid: 859458, cores: 1)
+spawned uWSGI worker 8 (pid: 859459, cores: 1)
+spawned uWSGI worker 9 (pid: 859460, cores: 1)
+spawned uWSGI worker 10 (pid: 859461, cores: 1)
+[pid: 859461|app: 0|req: 1/1] 127.0.0.1 () {36 vars in 497 bytes} [Tue Dec 14 06:31:14 2021] POST /api/v1/user/login/ => generated 223 bytes in 337 msecs (HTTP/1.1 200) 7 headers in 194 bytes (2 switches on core 0)
+...brutally killing workers...
+Gracefully killing worker 2 (pid: 859453)...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+worker 6 buried after 1 seconds
+worker 7 buried after 1 seconds
+worker 8 buried after 1 seconds
+worker 9 buried after 1 seconds
+worker 10 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/nasir/project/Forecast_as_a_service/qr_faas_management
+closing all non-uwsgi socket fds > 2 (max_fd = 1024)...
+found fd 3 mapped to socket 0 (/home/nasir/project/Forecast_as_a_service/qr_faas_management/qr_faas_management.sock)
+running /home/nasir/project/Forecast_as_a_service/venv/md/bin/uwsgi
+execvp(): No such file or directory [core/master_utils.c line 555]
+VACUUM: unix socket /home/nasir/project/Forecast_as_a_service/qr_faas_management/qr_faas_management.sock removed.

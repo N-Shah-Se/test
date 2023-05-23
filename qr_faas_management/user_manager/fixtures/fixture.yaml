@@ -1,0 +1,7 @@
+- model: user_manager.UserModel
+  pk: 1
+  fields:
+    username: admin
+    email: admin@gmail.com
+    password: admin123
+    is_admin: True
