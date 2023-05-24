@@ -1,60 +1,21 @@
-# Name of this GitHub Actions workflow.
-name: Semgrep
+name: "Upload SARIF"
 
+# Run workflow each time code is pushed to your repository and on a schedule.
+# The scheduled workflow runs every at 00:00 on Sunday UTC time.
 on:
-  # Scan changed files in PRs (diff-aware scanning):
-  pull_request: {}
-  # Scan on-demand through GitHub Actions interface:
-  workflow_dispatch: {}
-  # Scan mainline branches and report all findings: 
   push:
-    branches: ["master", "main"]
-  # Schedule the CI job (this method uses cron syntax):
   schedule:
-    - cron: '20 17 * * *' # Sets Semgrep to scan every day at 17:20 UTC.
-    # It is recommended to change the schedule to a random time.
-
-permissions:
-  actions: read
-  contents: read
-  security-events: write
+  - cron: '0 0 * * 0'
 
 jobs:
-  semgrep:
-    # User-definable name of this GitHub Actions job:
-    name: semgrep/ci
-    # If you are self-hosting, change the following `runs-on` value: 
+  build:
     runs-on: ubuntu-latest
-
-    container:
-      # A Docker image with Semgrep installed. Do not change this.
-      image: returntocorp/semgrep
-    permissions:
-      # required for all workflows
-      security-events: write
-      # only required for workflows in private repositories
-      actions: read
-      contents: read
-
-    # Skip any PR created by dependabot to avoid permission issues:
-    if: (github.actor != 'dependabot[bot]')
-    
     steps:
-      # Fetch project source with GitHub Actions Checkout.
-      - uses: actions/checkout@v3
-      # Run the "semgrep ci" command on the command line of the docker image.
-      - run: semgrep --config "p/default" && semgrep ci
-#         env:
-#            # Add the rules that Semgrep uses by setting the SEMGREP_RULES environment variable. 
-#            SEMGREP_RULES: p/default # more at semgrep.dev/explore
-
-#       - name: Download CodeQl
-#         run: wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz && tar -xvzf ./codeql-bundle-linux64.tar.gz 
-#         with:
-#           sarif_file: semgrep.sarif
-      - name: Upload SARIF file for GitHub Advanced Security Dashboard
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: results.sarif
-          category: my-analysis-tool
-        if: always()
+    # This step checks out a copy of your repository.
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        # Path to SARIF file relative to the root of the repository
+        sarif_file: results.sarif
