@@ -18,6 +18,8 @@ jobs:
   semgrep:
     name: Scan
     runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
     steps:
       # Checkout project source
       - uses: actions/checkout@v2
