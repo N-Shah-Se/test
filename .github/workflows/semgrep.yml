@@ -29,6 +29,7 @@ jobs:
     if: (github.actor != 'dependabot[bot]')
 
     steps:
+      - run: pip3 install semgrep
       # Fetch project source with GitHub Actions Checkout.
       - uses: actions/checkout@v3
       # Run the "semgrep ci" command on the command line of the docker image.
@@ -36,9 +37,3 @@ jobs:
         env:
            # Add the rules that Semgrep uses by setting the SEMGREP_RULES environment variable. 
            SEMGREP_RULES: p/default # more at semgrep.dev/explore
-
-      - name: Upload SARIF file for GitHub Advanced Security Dashboard
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: semgrep.sarif
-        if: always()
