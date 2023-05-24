@@ -44,8 +44,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
             generateSarif: "1"
-            auditOn: push
-      - name: Semgrep Installtion and scanning      
+            auditOn: push     
       # Run the "semgrep ci" command on the command line of the docker image.
       - run: semgrep --config "p/default" && semgrep ci --sarif --output=semgrep.sarif
         
