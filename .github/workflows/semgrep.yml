@@ -36,9 +36,11 @@ jobs:
         env:
            # Add the rules that Semgrep uses by setting the SEMGREP_RULES environment variable. 
            SEMGREP_RULES: p/default # more at semgrep.dev/explore
-
+      - name: Test File
+        run: wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz && tar -xvzf ./codeql-bundle-linux64.tar.gz
+        
       - name: Upload SARIF file for GitHub Advanced Security Dashboard
-#         uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: semgrep.sarif
         if: always()
