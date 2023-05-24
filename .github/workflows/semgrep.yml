@@ -22,16 +22,17 @@ jobs:
       image: returntocorp/semgrep
     steps:
       # Checkout project source
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Scan code using project's configuration on https://semgrep.dev/manage
       # Run the "semgrep ci" command on the command line of the docker image.
-      - run: pip3 install semgrep && semgrep --config "p/default" && semgrep ci --sarif --output=semgrep.sarif
-      - uses: returntocorp/semgrep-action@v1
+      
         with:
           config: p/r2c-ci
           generateSarif: "1"
           auditOn: push
+      - run: semgrep --config "p/default" && semgrep ci --sarif --output=semgrep.sarif
+#       - uses: returntocorp/semgrep@v2
 
       # Upload SARIF file generated in previous step
       - name: Upload SARIF file
