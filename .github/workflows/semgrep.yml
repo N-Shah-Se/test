@@ -1,64 +1,32 @@
-# Name of this GitHub Actions workflow.
 name: Semgrep
 
 on:
-  # Scan changed files in PRs (diff-aware scanning):
-  pull_request: {}
-  # Scan on-demand through GitHub Actions interface:
-  workflow_dispatch: {}
-  # Scan mainline branches and report all findings: 
   push:
-    branches: ["master", "main"]
-  # Schedule the CI job (this method uses cron syntax):
+    branches: [ master ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ master ]
   schedule:
-    - cron: '20 17 * * *' # Sets Semgrep to scan every day at 17:20 UTC.
-    # It is recommended to change the schedule to a random time.
-
-permissions:
-  actions: read
-  contents: read
-  security-events: write
+    - cron: '33 1 * * 0'
 
 jobs:
   semgrep:
-    # User-definable name of this GitHub Actions job:
-    name: semgrep/ci
-    # If you are self-hosting, change the following `runs-on` value: 
+    name: Scan
     runs-on: ubuntu-latest
-
-    container:
-      # A Docker image with Semgrep installed. Do not change this.
-      image: returntocorp/semgrep
-    permissions:
-      # required for all workflows
-      security-events: write
-      # only required for workflows in private repositories
-      actions: read
-      contents: read
-
-    # Skip any PR created by dependabot to avoid permission issues:
-    if: (github.actor != 'dependabot[bot]')
-    
     steps:
-      # Fetch project source with GitHub Actions Checkout.
-      - uses: actions/checkout@v3
-        with:
-            generateSarif: "1"
-            auditOn: push     
-      # Run the "semgrep ci" command on the command line of the docker image.
-      - run: semgrep --config "p/default" && semgrep ci --sarif --output=semgrep.sarif
-        
-#         env:
-#            # Add the rules that Semgrep uses by setting the SEMGREP_RULES environment variable. 
-#            SEMGREP_RULES: p/default # more at semgrep.dev/explore
+      # Checkout project source
+      - uses: actions/checkout@v2
 
-#       - name: Download CodeQl
-#         run: wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz && tar -xvzf ./codeql-bundle-linux64.tar.gz 
-#         with:
-#           sarif_file: semgrep.sarif
-      - name: Upload SARIF file for GitHub Advanced Security Dashboard
-        uses: github/codeql-action/upload-sarif@v2
+      # Scan code using project's configuration on https://semgrep.dev/manage
+      - uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/r2c-ci
+          generateSarif: "1"
+          auditOn: push
+
+      # Upload SARIF file generated in previous step
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: semgrep.sarif
-          category: my-analysis-tool
-        if: always()
+        if: hashFiles('semgrep.sarif') != ''
